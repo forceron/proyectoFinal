@@ -10,10 +10,20 @@ var limOriente=1000;
 var limOccidente=200;
 var mapa=document.getElementById("cuadrado");
 var puerta=document.getElementById("puerta");
+var puertasCerradas=8;
+var profesBuenos=4;
 puerta.style.top=limNorte+50+"px";
 puerta.style.left=limOccidente+30+"px";
 puerta.style.width= limOriente-limOccidente+"px";
-var puertas=[document.getElementById("puerta1"),document.getElementById("puerta2"),document.getElementById("puerta3"),document.getElementById("puerta4"),document.getElementById("puerta5"),document.getElementById("puerta6"),document.getElementById("puerta7"),document.getElementById("puerta8")]
+var puertas=[document.getElementById("puerta1"),document.getElementById("puerta2"),
+document.getElementById("puerta3"),document.getElementById("puerta4"),
+document.getElementById("puerta5"),document.getElementById("puerta6"),
+document.getElementById("puerta7"),document.getElementById("puerta8")]
+
+var profes=[document.getElementById("profe1"),document.getElementById("profe2"),
+document.getElementById("profe3"),document.getElementById("profe4"),
+document.getElementById("profe5"),document.getElementById("profe6"),
+document.getElementById("profe7"),document.getElementById("profe8")]
 
 
 mapa.style.width= 30+limOriente-limOccidente+"px";
@@ -24,6 +34,8 @@ personaje.src="img/"+direccion+contador+".png";
 mover.style.left= 600+"px" ;
 mover.style.top = 480+"px" ;
 vidasImg.src="img/Lives"+vidas+".png";
+
+
 window.onload=function(){document.onkeydown=desplazar};
     function desplazar(objeto){
        var tecla = objeto.which;
@@ -41,7 +53,7 @@ window.onload=function(){document.onkeydown=desplazar};
                   direccion="occidente";
                   contador=1;
                 }
-                pos=situacionY-22;
+                pos=situacionY-32;
                 if(pos<limOccidente){
                   pos=limOccidente;
                 }
@@ -61,7 +73,7 @@ window.onload=function(){document.onkeydown=desplazar};
                   contador=1;
                 }
 
-                pos=situacionX-22;
+                pos=situacionX-32;
                 if(pos<limNorte){
                   pos=limNorte;
                 }
@@ -77,7 +89,7 @@ window.onload=function(){document.onkeydown=desplazar};
                   direccion="oriente";
                   contador=1;
                 }
-                pos=situacionY-18;
+                pos=situacionY-8;
                 if(pos>limOriente){
                   pos=limOriente;
                 }
@@ -94,7 +106,7 @@ window.onload=function(){document.onkeydown=desplazar};
                   contador=1;
                 }
 
-                pos=situacionX-18;
+                pos=situacionX-8;
                   if(pos>limSur){
                   console.log("entro al if");
                   pos=limSur;
@@ -137,7 +149,30 @@ window.onload=function(){document.onkeydown=desplazar};
         personaje.src="img/"+direccion+contador+".png";
     }
     function abrirPuerta(num){
-      puertas[num].src="img/puerta9.png";
+		temp = puertas[num].src.split("/");
+		nombre_puerta = temp[temp.length-1];
+		
+		if(nombre_puerta!= "puerta9.png"){
+				//alert(nombre_puerta);
+		  puertas[num].src="img/puerta9.png";
+		  var aleat;
+		  if(puertasCerradas==profesBuenos){
+			aleat=1;
+			profesBuenos--;
+		  }else{
+			  aleat=Math.floor(Math.random() * (puertasCerradas)+1)
+			  if(aleat<profesBuenos){
+				  aleat=1;
+				  profesBuenos--;
+			  }else{
+				  aleat=2;
+			  }
+		  }
+		  puertasCerradas--;
+		  profes[num].style.top="160px";
+		  profes[num].style.left=250+94*num+"px";
+		  document.getElementById("profeimg"+num).src="img/profe"+aleat+".png";
+		}
     }
     contadorPuerta=1;
    
