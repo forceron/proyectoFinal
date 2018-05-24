@@ -48,7 +48,7 @@ function subirNivel(){
 	for(j=0;j<=7;j++){
 		document.getElementById("profeimg"+j).src="img/profe3.png";
 	}
-	totalTiempo=30;
+	totalTiempo=40;
 	alert("nivel "+(dificultad-2));
 }
 
@@ -208,7 +208,7 @@ function subirNivel(){
 	function quitarVida(){
 		
 	}
-	var totalTiempo=30;
+	var totalTiempo=40;
 	var url="reingreso.html"
 	function updateReloj()
 		{
