@@ -10,8 +10,8 @@ var limOriente=1000;
 var limOccidente=200;
 var mapa=document.getElementById("cuadrado");
 var puerta=document.getElementById("puerta");
-var puertasCerradas=8;
-var profesBuenos=6;
+var dificultad=3;
+var profesBuenos=0;
 puerta.style.top=limNorte+50+"px";
 puerta.style.left=limOccidente+30+"px";
 puerta.style.width= limOriente-limOccidente+"px";
@@ -25,7 +25,6 @@ document.getElementById("profe3"),document.getElementById("profe4"),
 document.getElementById("profe5"),document.getElementById("profe6"),
 document.getElementById("profe7"),document.getElementById("profe8")]
 
-
 mapa.style.width= 30+limOriente-limOccidente+"px";
 mapa.style.height= 50+limSur-limNorte+"px";
 mapa.style.left= limOccidente+"px" ;
@@ -34,9 +33,26 @@ personaje.src="img/"+direccion+contador+".png";
 mover.style.left= 600+"px" ;
 mover.style.top = 480+"px" ;
 vidasImg.src="img/Lives"+vidas+".png";
+function subirNivel(){
+	contador=1;
+	direccion="norte";
+	dificultad++;
+	profesBuenos=0;
+	mover.style.left= 600+"px" ;
+	mover.style.top = 480+"px" ;
+	    personaje.src="img/"+direccion+contador+".png";
+	for(i=0;i<8;i++){	
+		puertas[i].src="img/puerta1.png";
 
+	}
+	for(j=0;j<=7;j++){
+		document.getElementById("profeimg"+j).src="img/profe3.png";
+	}
+	totalTiempo=60;
+	alert("nivel "+(dificultad-2));
+}
 
-window.onload=function(){document.onkeydown=desplazar};
+//window.onload=function(){document.onkeydown=desplazar};
     function desplazar(objeto){
        var tecla = objeto.which;
        var situacionY = mover.offsetLeft;
@@ -156,35 +172,65 @@ window.onload=function(){document.onkeydown=desplazar};
 				//alert(nombre_puerta);
 		  puertas[num].src="img/puerta9.png";
 		  var aleat;
-		  
-		  aleat=Math.floor(Math.random() * (2)+1);
-		 
+		  aleat=Math.floor(Math.random() * (10)+1);
+		  if(aleat>dificultad){
+			  aleat=1;
+		  }
+		  else{
+			  aleat=2;  
+		  }
 		  profes[num].style.top="160px";
 		  profes[num].style.left=250+94*num+"px";
+		  if(aleat==1){
+			  profesBuenos++;
+		  }
 		  document.getElementById("profeimg"+num).src="img/profe"+aleat+".png";
 		}else{			
 			temp = document.getElementById("profeimg"+num).src.split("/");
 			nombre_puerta = temp[temp.length-1];
 			if(nombre_puerta == "profe2.png"){
-				var aleat2=Math.floor(Math.random() * (2)+1);
-				puertas[num].src="img/puerta"+aleat2+".png";
-				document.getElementById("profeimg"+num).src="";
-			}else{
-				//puertas[num].style.display = 'block';
+				puertas[num].src="img/puerta1.png";
+				document.getElementById("profeimg"+num).src="img/profe3.png";
+				profes[num].style.display == 'none';
 			}
+	
+			
+		}
+		//alert(profesBuenos);
+		if(profesBuenos==8){
+			//alert("Gano");
+			subirNivel();
+			
 		}
 		
     }
     contadorPuerta=1;
-	
-	 var totalTiempo=60;
+	function quitarVida(){
+		
+	}
+	var totalTiempo=60;
 	function updateReloj()
 		{
+			document.onkeydown=desplazar;
 			document.getElementById('CuentaAtras').innerHTML = totalTiempo+" segundos";
 
 			if(totalTiempo==0)
 			{
-				window.location=url;
+				alert("Has caido en prueba");
+				vidas--;
+				vidasImg.src="img/Lives"+vidas+".png";
+				if(vidas==0){
+					//llamamos pantalla game over
+					alert ("A vender vive 100");
+				}else{
+						dificultad--;
+				subirNivel();
+				//alert("Game over");
+				//window.location=url;
+				//totalTiempo=60;
+				setTimeout("updateReloj()",1000);
+				}
+			
 			}else{
 				/* Restamos un segundo al tiempo restante */
 				totalTiempo-=1;
