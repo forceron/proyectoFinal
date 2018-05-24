@@ -11,7 +11,7 @@ var limOccidente=200;
 var mapa=document.getElementById("cuadrado");
 var puerta=document.getElementById("puerta");
 var puertasCerradas=8;
-var profesBuenos=4;
+var profesBuenos=6;
 puerta.style.top=limNorte+50+"px";
 puerta.style.left=limOccidente+30+"px";
 puerta.style.width= limOriente-limOccidente+"px";
@@ -117,8 +117,7 @@ window.onload=function(){document.onkeydown=desplazar};
                 break;
           case 69:
            
-              
-              if(situacionX<=230 && situacionX>=180){
+                if(situacionX<=230 && situacionX>=180){
 
                 console.log("ento al if");
                 var pos=0;
@@ -147,33 +146,53 @@ window.onload=function(){document.onkeydown=desplazar};
             alert("GAME OVER");
         }
         personaje.src="img/"+direccion+contador+".png";
+		
     }
     function abrirPuerta(num){
 		temp = puertas[num].src.split("/");
 		nombre_puerta = temp[temp.length-1];
 		
-		if(nombre_puerta!= "puerta9.png"){
+		if(nombre_puerta!= "puerta9.png" ){
 				//alert(nombre_puerta);
 		  puertas[num].src="img/puerta9.png";
 		  var aleat;
-		  if(puertasCerradas==profesBuenos){
-			aleat=1;
-			profesBuenos--;
-		  }else{
-			  aleat=Math.floor(Math.random() * (puertasCerradas)+1)
-			  if(aleat<profesBuenos){
-				  aleat=1;
-				  profesBuenos--;
-			  }else{
-				  aleat=2;
-			  }
-		  }
-		  puertasCerradas--;
+		  
+		  aleat=Math.floor(Math.random() * (2)+1);
+		 
 		  profes[num].style.top="160px";
 		  profes[num].style.left=250+94*num+"px";
 		  document.getElementById("profeimg"+num).src="img/profe"+aleat+".png";
+		}else{			
+			temp = document.getElementById("profeimg"+num).src.split("/");
+			nombre_puerta = temp[temp.length-1];
+			if(nombre_puerta == "profe2.png"){
+				var aleat2=Math.floor(Math.random() * (2)+1);
+				puertas[num].src="img/puerta"+aleat2+".png";
+				document.getElementById("profeimg"+num).src="";
+			}else{
+				//puertas[num].style.display = 'block';
+			}
 		}
+		
     }
     contadorPuerta=1;
-   
-    
+	
+	 var totalTiempo=60;
+	function updateReloj()
+		{
+			document.getElementById('CuentaAtras').innerHTML = totalTiempo+" segundos";
+
+			if(totalTiempo==0)
+			{
+				window.location=url;
+			}else{
+				/* Restamos un segundo al tiempo restante */
+				totalTiempo-=1;
+				/* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
+				setTimeout("updateReloj()",1000);
+			}
+		}
+		window.onload=updateReloj;  
+		
+
+	
