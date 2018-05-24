@@ -48,7 +48,7 @@ function subirNivel(){
 	for(j=0;j<=7;j++){
 		document.getElementById("profeimg"+j).src="img/profe3.png";
 	}
-	totalTiempo=60;
+	totalTiempo=30;
 	alert("nivel "+(dificultad-2));
 }
 
@@ -208,7 +208,8 @@ function subirNivel(){
 	function quitarVida(){
 		
 	}
-	var totalTiempo=60;
+	var totalTiempo=30;
+	var url="reingreso.html"
 	function updateReloj()
 		{
 			document.onkeydown=desplazar;
@@ -221,12 +222,13 @@ function subirNivel(){
 				vidasImg.src="img/Lives"+vidas+".png";
 				if(vidas==0){
 					//llamamos pantalla game over
-					alert ("A vender vive 100");
+					alert ("A vender vive Bon Ice :v");
+					window.location=url;
 				}else{
 						dificultad--;
 				subirNivel();
 				//alert("Game over");
-				//window.location=url;
+				
 				//totalTiempo=60;
 				setTimeout("updateReloj()",1000);
 				}
